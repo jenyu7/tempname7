@@ -1,0 +1,14 @@
+Plan (so far): 
+- teacher/parent login 
+   - two levels of accounts
+- mailing features
+	- send out unique identifiers to parents to make PTC accounts
+	- same w/ teachers
+	- will talk w Ryan about how PTC volunteers are linked to teachers
+- teacher accounts used by student volunteers (can manually manage queue, students need to manually finish sessions)
+- parents can look up teacher rooms and sign up for teachers, get alerts when an appointment is near time
+
+Development: 
+- App is set up; create index.html
+	- maybe copy paste old css and html files for styling !
+- Setup login functionality (db creation)
