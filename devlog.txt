@@ -19,6 +19,3 @@ added log.sh
 
 charlesW -- 2018-05-10 13:01:05
 added submodule
-
-charlesW -- 2018-05-10 13:01:44
-added submodule
