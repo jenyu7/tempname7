@@ -14,4 +14,6 @@ Initialized README, devlog
 Began design doc, development outline
 Flask app setup
 -----------------------
-=======================================================
+=======================================================jenniferZ -- 2018-05-21 20:24:52
+worked on db login stuff -- still need to check for injections tho
+
