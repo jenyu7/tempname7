@@ -13,9 +13,16 @@ jenniferY -- 2018-05-08 23:07
 Initialized README, devlog
 Began design doc, development outline
 Flask app setup
+<<<<<<< HEAD:devlog.txt
 
 jenniferZ -- 2018-05-10 13:01:02
 added log.sh
 
 charlesW -- 2018-05-10 13:01:05
 added submodule
+=======
+-----------------------
+=======================================================jenniferZ -- 2018-05-21 20:24:52
+worked on db login stuff -- still need to check for injections tho
+
+>>>>>>> 52c443a9e00d891794f5c5c75bc844db94579e00:docs/devlog.txt
