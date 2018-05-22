@@ -1,23 +1,23 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>
-      yeahboy
-    </title>
-  </head>
-  <body>
-    <h1> THIS IS A TEMP PAGE FOR TESTING APACHE2</h1>
+{% extends "base.html" %}
 
-    <form method="POST" action="/loggit">
-      <h3>Log in:</h3>
-      <input type="text" name="username" placeholder="Username" required><br><br>
-      <input type="password" name="password" placeholder="Password" required ><br><br>
-      <input class="btn" type="submit" value="Log In">
-</form>
+{% block title %}
 
-<br><br><br>
+{% endblock %}
 
-<form action="/signup" method="POST">
+{% block body %}
+
+  <h1> THIS IS A TEMP PAGE FOR TESTING APACHE2</h1>
+
+  <form method="POST" action="/loggit">
+    <h3>Log in:</h3>
+    <input type="text" name="username" placeholder="Username" required><br><br>
+    <input type="password" name="password" placeholder="Password" required ><br><br>
+    <input class="btn" type="submit" value="Log In">
+  </form>
+
+  <br><br><br>
+
+  <form action="/signup" method="POST">
     <h3>Sign Up:</h3>
     <input type ="text" name="username" placeholder="Username" required><br><br>
     <input type = 'password' name = 'password' placeholder="Password" required><br><br>
@@ -25,5 +25,4 @@
     <input class="btn" type='submit' value='Create Account'>
   </form>
 
-</body>
-</html>
+{% endblock %}

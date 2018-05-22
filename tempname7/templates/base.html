@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- base template, shouldn't be loaded-->
+
+  <head>
+    <!-- title -->
+    <title> Monopoly - {% block title %} {% endblock %} </title>
+    <link rel="icon" href="/tempname7/static/monopoly.jpg" type="image/jpg">
+
+    <meta charset="utf-8">
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+          crossorigin="anonymous">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="/tempname7/static/styles.css">
+  </head>
+
+  <body class="center">
+    <!-- navbar -->
+    <nav class="navbar fixed-top navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">
+        Monopoly
+      </a>
+      <a class="navbar-brand" href="/directions" target="_blank">
+        Directions
+      </a>
+    </nav>
+    <br><br><br>
+
+    <!-- body -->
+    {% block body%}
+      Oops. You're not supposed to see me like this.
+    {% endblock body%}
+
+    <!-- footer -->
+    {% block footer %}
+      <!-- link script if necessary -->
+    {% endblock %}
+  </body>
+</html>
