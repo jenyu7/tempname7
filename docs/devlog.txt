@@ -20,5 +20,14 @@ added log.sh
 charlesW -- 2018-05-10 13:01:05
 added submodule
 
+kellyW, charlesW, jenY, jenniferZ -- 2018-05-15
+changed course for project from PTC to Monopoly
+
 jenniferZ -- 2018-05-21 20:24:52
 worked on db login stuff -- still need to check for injections tho
+
+jenniferZ -- 2018-05-22 11:35:37
+worked on db stuff so that it checks for sql injections-ish
+
+charlesW -- 2018-05-22 12:22:35
+created default html pages and stuffs
