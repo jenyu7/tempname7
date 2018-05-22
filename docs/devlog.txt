@@ -26,3 +26,6 @@ added submodule
 worked on db login stuff -- still need to check for injections tho
 
 >>>>>>> 52c443a9e00d891794f5c5c75bc844db94579e00:docs/devlog.txt
+
+jenniferZ -- 2018-05-22 11:35:37
+worked on db stuff so that it checks for sql injections-ish
