@@ -1,15 +1,16 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import os
-
+from utils import db
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
+db.init_db()
 
 @app.route("/")
 def index():
     if "username" in session:
-        return redirect(url_for("hello"))
+        return redirect(url_for("profile"))
     return render_template("index.html")
 
 
@@ -18,43 +19,42 @@ def signup():
 
     if "username" not in session:
         print "lol"
-        '''
-        users = db.getUsers()
-
-        #username already exists
-        if request.form['username'] in users:
-            flash("Username already exists")
-            return render_template("index.html")
 
         #passwords dont match
-        if request.form.get['password'] != request.form['confpass']:
+        if request.form['password'] != request.form['confpass']:
             flash("Passwords don't match")
             return render_template("index.html")
 
         #successful signup
         else:
-            db.addUser(request.form['username'], request.form['password'])
-            session['username'] = request.form['username']
-            return redirect(url_for('hello'))
-'''
+            if ( db.add_user(request.form['username'], request.form['password']) ):
+                flash("Username not good")
+                return render_template("index.html")
+
+            else:
+                session['username'] = request.form['username']
+                return redirect(url_for('profile'))
+
     else:
-        flash("Already logged in!")
-        return redirect(url_for("hello"))
+        flash("Already logged!")
+        return redirect(url_for("profile"))
 
 
-@app.route('/loggit', methods=['GET', 'POST'])
-def loggit():
+@app.route('/login', methods=['GET', 'POST'])
+def login():
     if 'user' in session:
         return redirect('/')
+
     else:
-        '''
-        users = db.getUsers()
+
+        usern = request.form['username']
+        passs =  request.form['password']
 
         #success!
-        if request.form['username'] in users:
-            if request.form['password'] == users[request.form['user']]:
-                session['username'] = request.form['username']
-                return redirect(url_for('hello'))
+        if db.get_user(usern):
+
+            if db.auth(usern,passs):
+                return redirect(url_for('profile'))
 
             #can not log in :(
             else:
@@ -64,8 +64,6 @@ def loggit():
         else:
             flash ('that person doesnt exist')
             return render_template("index.html")
-        '''
-        print "lol"
 
 
 @app.route('/logout')
@@ -75,8 +73,8 @@ def logout():
     return redirect('/')
 
 
-@app.route('/hello', methods=["GET", "POST"])
-def hello():
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
     if "username" not in session:
         return render_template("index.html")
     return render_template("test.html")
