@@ -23,6 +23,10 @@ added submodule
 kellyW, charlesW, jenY, jenniferZ -- 2018-05-15
 changed course for project from PTC to Monopoly
 
+kellyW -- 2018-05-20 21:35:37
+added routes for login and signup in __init__.py
+added to index.html
+
 jenniferZ -- 2018-05-21 20:24:52
 worked on db login stuff -- still need to check for injections tho
 
@@ -31,3 +35,9 @@ worked on db stuff so that it checks for sql injections-ish
 
 charlesW -- 2018-05-22 12:22:35
 created default html pages and stuffs
+
+kellyW, jenniferZ -- 2018-05-20 13:20:37
+use db.py methods for login and signup
+
+jenniferZ -- 2018-05-23 11:36:27
+hashed passwords and started on tables for board and cards
