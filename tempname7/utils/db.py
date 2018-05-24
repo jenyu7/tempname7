@@ -82,7 +82,7 @@ cards: attributes
 
 
 #===============================TESTS===============================
-
+'''
 init_db("data.db")
 print get_user("jenni", "data.db")
 add_user("jenni", "12345", "data.db")
@@ -90,3 +90,4 @@ print get_user("jenni", "data.db")
 
 add_user("'sdfajslk", "12345", "data.db")
 print get_user("'sdfajslk", "data.db")
+'''

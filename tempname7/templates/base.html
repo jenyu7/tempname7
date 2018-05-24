@@ -31,7 +31,16 @@
       </a>
     </nav>
     <br><br><br>
+    
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
+    
     <!-- body -->
     {% block body%}
       Oops. You're not supposed to see me like this.
