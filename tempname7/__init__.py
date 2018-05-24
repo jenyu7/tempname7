@@ -18,27 +18,31 @@ def index():
 def signup():
 
     if "username" not in session:
-        print "lol"
 
+        try:
+            usern = request.form['username']
+            passs = request.form['password']
+            passc = request.form['confpass']
+        except:
+            return render_template("index.html")
+        
         #passwords dont match
-        if request.form['password'] != request.form['confpass']:
+        if passs != passc:
             flash("Passwords don't match")
             return render_template("index.html")
 
         #successful signup
         else:
-            if ( db.add_user(request.form['username'], request.form['password']) ):
+            if ( db.add_user(usern, passs) == False ):
                 flash("Username not good")
                 return render_template("index.html")
 
             else:
-                session['username'] = request.form['username']
+                session['username'] = usern
                 return redirect(url_for('profile'))
 
     else:
-        flash("Already logged!")
         return redirect(url_for("profile"))
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -47,19 +51,22 @@ def login():
 
     else:
 
-        usern = request.form['username']
-        passs =  request.form['password']
-
+        try:
+            usern = request.form['username']
+            passs =  request.form['password']
+        except:
+            return render_template("index.html")
+            
         #success!
         if db.get_user(usern):
 
             if db.auth(usern,passs):
+                session['username'] = usern
                 return redirect(url_for('profile'))
 
             #can not log in :(
-            else:
-                flash ('thats not the right password')
-                return render_template("index.html")
+            flash ('thats not the right password')
+            return render_template("index.html")
 
         else:
             flash ('that person doesnt exist')
