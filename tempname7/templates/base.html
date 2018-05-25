@@ -23,12 +23,28 @@
   <body class="center">
     <!-- navbar -->
     <nav class="navbar fixed-top navbar-dark bg-dark">
+
       <a class="navbar-brand" href="/">
         Monopoly
       </a>
+
       <a class="navbar-brand" href="/directions" target="_blank">
         Directions
       </a>
+
+      {% if log  %}
+
+      <a class="navbar-brand" href="/board" target="_blank">
+        Board
+      </a>
+      
+      <a class="navbar-brand" href="/logout" target="_blank">
+        Logout
+      </a>
+
+      {% endif %}
+
+            
     </nav>
     <br><br><br>
     

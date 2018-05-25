@@ -11,7 +11,7 @@ db.init_db()
 def index():
     if "username" in session:
         return redirect(url_for("profile"))
-    return render_template("index.html")
+    return render_template("index.html", log = False)
 
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -29,13 +29,13 @@ def signup():
         #passwords dont match
         if passs != passc:
             flash("Passwords don't match")
-            return render_template("index.html")
+            return render_template("index.html", log = False)
 
         #successful signup
         else:
             if ( db.add_user(usern, passs) == False ):
                 flash("Username not good")
-                return render_template("index.html")
+                return render_template("index.html", log = False)
 
             else:
                 session['username'] = usern
@@ -55,7 +55,7 @@ def login():
             usern = request.form['username']
             passs =  request.form['password']
         except:
-            return render_template("index.html")
+            return render_template("index.html", log = False)
             
         #success!
         if db.get_user(usern):
@@ -66,11 +66,11 @@ def login():
 
             #can not log in :(
             flash ('thats not the right password')
-            return render_template("index.html")
+            return render_template("index.html", log = False)
 
         else:
             flash ('that person doesnt exist')
-            return render_template("index.html")
+            return render_template("index.html", log = False)
 
 
 @app.route('/logout')
@@ -83,8 +83,15 @@ def logout():
 @app.route('/profile', methods=["GET", "POST"])
 def profile():
     if "username" not in session:
-        return render_template("index.html")
-    return render_template("test.html")
+        return render_template("index.html", log = False)
+    return render_template("test.html", log = True)
+
+
+@app.route('/board', methods=["GET", "POST"])
+def board():
+    if "username" not in session:
+        return render_template("index.html", log = False)
+    return render_template("board.html", log = True)
 
 
 # incase of bad routes go back to homepage

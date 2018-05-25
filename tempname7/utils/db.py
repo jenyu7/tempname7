@@ -106,7 +106,6 @@ def init_cards(c, populate=True):
 
 #===============================TESTS===============================
 '''
-    <<<<<<< HEAD
 
 init_db("data.db")
 print get_user("jenni", "data.db")
@@ -126,5 +125,5 @@ print auth("jenni", "12345")
 print auth("jenni", "123452")
 #add_user("'sdfajslk", "12345")
 #print get_user("'sdfajslk")
->>>>>>> e7b56cc15a5954825b824b305ffa62d185d62549
+
 '''
