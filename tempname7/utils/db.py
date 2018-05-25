@@ -2,7 +2,9 @@ import sqlite3
 from hashlib import sha1
 from random import random
 
-def init_db(f='data.db'):
+path = '/var/www/tempname7/tempname7/utils/db/'
+
+def init_db(f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -36,7 +38,7 @@ def init_users(c, populate=True):
         add_user("jyu", "abcd123")
         add_user("kwang", "123abcd")
         
-def add_user(username, password, f='data.db'):
+def add_user(username, password, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -57,7 +59,7 @@ def add_user(username, password, f='data.db'):
     db.close()
     return True
     
-def get_user(username, f='data.db'):
+def get_user(username, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -73,7 +75,7 @@ def get_user(username, f='data.db'):
         return False
     return fet[0]
 
-def auth(username, password, f='data.db'):
+def auth(username, password, f=path+'data.db'):
     return sha1(password).hexdigest() == get_user(username)[1]
 
 #==========================BOARD FUNCTIONS==========================

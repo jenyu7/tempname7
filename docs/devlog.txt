@@ -41,3 +41,6 @@ use db.py methods for login and signup
 
 jenniferZ -- 2018-05-23 11:36:27
 hashed passwords and started on tables for board and cards
+
+jenniferZ -- 2018-05-25 18:45:37
+fixed apache issue with db
