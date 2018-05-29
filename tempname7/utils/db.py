@@ -198,7 +198,8 @@ print auth("jenni", "123452")
 
 '''
 
-db = sqlite3.connect('data.db')
-c = db.cursor()
+    
+#db = sqlite3.connect('data.db')
+#c = db.cursor()
 
-init_board(c)
+#init_board(c)
