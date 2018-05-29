@@ -129,12 +129,36 @@ def init_board(c, populate=True):
             board.append(curr)
             i+=1
 
+        miscnames  = [
+            'Reading Railroad',
+            'Electric Company',
+            'Pennsylvania Railroad',
+            'B. & O. Railroad',
+            'Water Works',
+            'Short Line'
+            ]
+        miscprices = [
+            200,
+            150,
+            200,
+            200,
+            150,
+            200
+            ]
+
+        i = 0
+        while i < len(miscnames):
+            curr = [i+len(names), miscnames[i], 'misc', miscprices[i]]
+            board.append(curr)
+            i+=1
+
+            
         for b in board:
             comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' %(b[0], b[1], b[2], b[3])
             c.execute(comm)
-            print b
+            #print b
 
-
+            
 
 #==========================CARDS FUNCTIONS==========================
 def init_cards(c, populate=True):
