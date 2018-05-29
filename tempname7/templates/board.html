@@ -6,12 +6,18 @@ Board
 {% endblock %}
 
 {% block body %}
-    <svg id="board" height="700" width="700" style="border: 1px solid;">
-    </svg>
+  <center>
+    <svg id="board" height="800" width="800" style="border: 1px solid;">
 
-    <button id = "b"> Temp button  </button>
-    <!--<script src="svg.js"> </script>-->
+    </svg>
+  </center>
+  <button id = "b"> Temp button  </button>
 {% endblock %}
 
-
-
+{% block footer %}
+  <script src="static/board.js"> </script>
+  <!--
+    *******************************UNCOMMENT THIS FOR LAUNCH***********************************************
+  -->
+  <!-- <script src="/var/www/tempname7/tempname7/static/board.js"> </script> -->
+{% endblock %}

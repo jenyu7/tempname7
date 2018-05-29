@@ -32,31 +32,32 @@
         Directions
       </a>
 
+      <!-- more options if logged in -->
       {% if log  %}
 
-      <a class="navbar-brand" href="/board" target="_blank">
-        Board
-      </a>
-      
-      <a class="navbar-brand" href="/logout" target="_blank">
-        Logout
-      </a>
+        <a class="navbar-brand" href="/board">
+          Board
+        </a>
+
+        <a class="navbar-brand" href="/logout">
+          Logout
+        </a>
 
       {% endif %}
 
-            
+
     </nav>
     <br><br><br>
-    
+
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    {{message}}
-    {% endfor %}
-    {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          {{message}}
+        {% endfor %}
+      {% endif %}
     {% endwith %}
 
-    
+
     <!-- body -->
     {% block body%}
       Oops. You're not supposed to see me like this.

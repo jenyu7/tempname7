@@ -2,7 +2,10 @@ import sqlite3
 from hashlib import sha1
 from random import random
 
-path = '/var/www/tempname7/tempname7/utils/db/'
+path = 'utils/db/'
+# ******************* UNCOMMENT THIS FOR LAUNCH *******************************
+# path = '/var/www/tempname7/tempname7/utils/db/'
+
 
 def init_db(f=path+'data.db'):
     db = sqlite3.connect(f)
@@ -15,11 +18,11 @@ def init_db(f=path+'data.db'):
     except:
         print "Database has already been initialized!"
         return False
-        
+
     db.commit()
     db.close()
     return True
-    
+
 #returns true if there's a possible injection
 def checc_injecc(strr):
     bad_chars = '~`!@#$%^&*()_+-=[]{}\|:;",./<>?\\\''
@@ -37,7 +40,7 @@ def init_users(c, populate=True):
         add_user("cweng", "abcde")
         add_user("jyu", "abcd123")
         add_user("kwang", "123abcd")
-        
+
 def add_user(username, password, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -45,7 +48,7 @@ def add_user(username, password, f=path+'data.db'):
     if checc_injecc(username) or checc_injecc(password):
         print "Don't use special characters buddy"
         return False #failed
-    
+
     #inserts into table
     try:
         passs = sha1(password).hexdigest()
@@ -54,11 +57,11 @@ def add_user(username, password, f=path+'data.db'):
     except:
         print "Username taken!"
         return False
-    
+
     db.commit()
     db.close()
     return True
-    
+
 def get_user(username, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -66,7 +69,7 @@ def get_user(username, f=path+'data.db'):
     if checc_injecc(username):
         print "Don't use special characters buddy"
         return False #failed
-    
+
     comm = 'SELECT * FROM users WHERE username="%s";' %(username)
     c.execute(comm)
     #returns a list
