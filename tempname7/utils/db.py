@@ -2,8 +2,10 @@ import sqlite3
 from hashlib import sha1
 from random import random
 
-#path = '/var/www/tempname7/tempname7/utils/db/'
-path = ''
+path = 'utils/db/'
+# ******************* UNCOMMENT THIS FOR LAUNCH *******************************
+# path = '/var/www/tempname7/tempname7/utils/db/'
+
 
 def init_db(f=path+'data.db'):
     db = sqlite3.connect(f)
@@ -16,11 +18,11 @@ def init_db(f=path+'data.db'):
     except:
         print "Database has already been initialized!"
         return False
-        
+
     db.commit()
     db.close()
     return True
-    
+
 #returns true if there's a possible injection
 def checc_injecc(strr):
     bad_chars = '~`!@#$%^&*()_+-=[]{}\|:;",./<>?\\\''
@@ -38,7 +40,7 @@ def init_users(c, populate=True):
         add_user("cweng", "abcde")
         add_user("jyu", "abcd123")
         add_user("kwang", "123abcd")
-        
+
 def add_user(username, password, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -46,7 +48,7 @@ def add_user(username, password, f=path+'data.db'):
     if checc_injecc(username) or checc_injecc(password):
         print "Don't use special characters buddy"
         return False #failed
-    
+
     #inserts into table
     try:
         passs = sha1(password).hexdigest()
@@ -55,11 +57,11 @@ def add_user(username, password, f=path+'data.db'):
     except:
         print "Username taken!"
         return False
-    
+
     db.commit()
     db.close()
     return True
-    
+
 def get_user(username, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -67,7 +69,7 @@ def get_user(username, f=path+'data.db'):
     if checc_injecc(username):
         print "Don't use special characters buddy"
         return False #failed
-    
+
     comm = 'SELECT * FROM users WHERE username="%s";' %(username)
     c.execute(comm)
     #returns a list
@@ -86,12 +88,12 @@ def auth(username, password, f=path+'data.db'):
 def init_board(c, populate=True):
     c.execute("CREATE TABLE board(id INTEGER PRIMARY KEY, name TEXT, color TEXT, price INTEGER)")
 
-  
+
     if populate:
         board =  []
         names =  ['Mediterranean Avenue', 'Baltic Avenue',
                   'Oriental Avenue', 'Vermont Avenue', 'Connecticut Avenue',
-                  'St. Charles Place', 'States Avenue', 'Virginia Avenue', 
+                  'St. Charles Place', 'States Avenue', 'Virginia Avenue',
                   'St. James Place', 'Tennessee Avenue', 'New York Avenue',
                   'Kentucky Avenue', 'Indiana Avenue', 'Illinois Avenue',
                   'Atlantic Avenue', 'Ventnor Avenue', 'Marvin Gardens',
@@ -122,7 +124,7 @@ def init_board(c, populate=True):
             curr = [i, names[i], colors[0], prices[i]]
             board.append(curr)
             i+=1
-        
+
         while i < len(names):
             #since first color only has 2
             curr = [i, names[i], colors[(i+1)/3], prices[i]]
@@ -195,7 +197,7 @@ print auth("jenni", "123452")
 #print get_user("'sdfajslk")
 
 '''
-    
+
 db = sqlite3.connect('data.db')
 c = db.cursor()
 
