@@ -44,3 +44,6 @@ hashed passwords and started on tables for board and cards
 
 jenniferZ -- 2018-05-25 18:45:37
 fixed apache issue with db
+
+jenniferZ -- 2018-05-29 12:55:40
+finished initializing board db
