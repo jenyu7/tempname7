@@ -86,14 +86,55 @@ def auth(username, password, f=path+'data.db'):
 #type is the type of place it is:
 #  chance, community, tax, railroad, jail, go to jail, free parking, house, electric company, water works
 def init_board(c, populate=True):
-    c.execute("CREATE TABLE board(id INTEGER PRIMARY KEY, type INTEGER, name TEXT, color TEXT, price INTEGER)")
+    c.execute("CREATE TABLE board(id INTEGER PRIMARY KEY, name TEXT, color TEXT, price INTEGER)")
 
-    '''
+
     if populate:
-        comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' %(id, name, color, price)
-        c.execute(comm)
-    '''
+        board =  []
+        names =  ['Mediterranean Avenue', 'Baltic Avenue',
+                  'Oriental Avenue', 'Vermont Avenue', 'Connecticut Avenue',
+                  'St. Charles Place', 'States Avenue', 'Virginia Avenue',
+                  'St. James Place', 'Tennessee Avenue', 'New York Avenue',
+                  'Kentucky Avenue', 'Indiana Avenue', 'Illinois Avenue',
+                  'Atlantic Avenue', 'Ventnor Avenue', 'Marvin Gardens',
+                  'Pacific Avenue', 'North Carolina Avenue', 'Pennsylvania Avenue',
+                  'Park Place', 'Boardwalk'
+                      ]
+        colors = ['brown',
+                  'white',
+                  'pink',
+                  'orange',
+                  'red',
+                  'yellow',
+                  'green',
+                  'blue'
+                      ]
+        prices = [60, 60,
+                  100, 100, 120,
+                  140, 140, 160,
+                  180, 180, 200,
+                  220, 220, 240,
+                  260, 260, 280,
+                  300, 300, 320,
+                  350, 400
+                      ]
 
+        i = 0
+        while i < 2:
+            curr = [i, names[i], colors[0], prices[i]]
+            board.append(curr)
+            i+=1
+
+        while i < len(names):
+            #since first color only has 2
+            curr = [i, names[i], colors[(i+1)/3], prices[i]]
+            board.append(curr)
+            i+=1
+
+        for b in board:
+            comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' %(b[0], b[1], b[2], b[3])
+            c.execute(comm)
+            print b
 
 
 
@@ -132,3 +173,8 @@ print auth("jenni", "123452")
 #print get_user("'sdfajslk")
 
 '''
+
+db = sqlite3.connect('data.db')
+c = db.cursor()
+
+init_board(c)
