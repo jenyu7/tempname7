@@ -1,8 +1,10 @@
 import sqlite3
 from hashlib import sha1
 from random import random
+import math
 
-path = 'utils/db/'
+path = ''
+#path = 'utils/db/'
 # ******************* UNCOMMENT THIS FOR LAUNCH *******************************
 # path = '/var/www/tempname7/tempname7/utils/db/'
 
@@ -74,6 +76,7 @@ def get_user(username, f=path+'data.db'):
     c.execute(comm)
     #returns a list
     fet = c.fetchall()
+    
     if len(fet) == 0:
         return False
     return fet[0]
@@ -159,7 +162,32 @@ def init_board(c, populate=True):
             comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' %(b[0], b[1], b[2], b[3])
             c.execute(comm)
 
-            
+def get_board_info(name, f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    comm = 'SELECT * FROM board WHERE name="%s";' %(name)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet[0]
+
+def get_colors(color, f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    comm = 'SELECT * FROM board WHERE color="%s";' %(color)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet
+
 
 #==========================CARDS FUNCTIONS==========================
 def init_cards(c, populate=True):
@@ -214,13 +242,46 @@ def init_cards(c, populate=True):
             'You have won second prize in a beauty contest - Collect $10',
             'You inherit $100'
             ]
-       
+
         i = 0
         while i < len(commun):
             comm = 'INSERT INTO comm_cards VALUES(%d, "%s")' %(i, commun[i])
             c.execute(comm)
             i+=1
 
+def get_chance(f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    c.execute("SELECT id FROM chance_cards WHERE id = (SELECT MAX(id) FROM chance_cards)")
+    max_id = c.fetchall()[0][0]
+    idd = math.floor(random() * (max_id+1))
+    
+    comm = 'SELECT * FROM chance_cards WHERE id=%d;' %(idd)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet[0]
+
+def get_comm(f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    
+    c.execute("SELECT id FROM chance_cards WHERE id = (SELECT MAX(id) FROM chance_cards)")
+    max_id = c.fetchall()[0][0]
+    idd = math.floor(random() * (max_id+1))
+    
+    comm = 'SELECT * FROM comm_cards WHERE id=%d;' %(idd)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet[0]
 
 #===============================TESTS===============================
 '''
@@ -252,3 +313,27 @@ print auth("jenni", "123452")
 
 #init_board(c)
 #init_cards(c)
+
+#init_db()
+'''
+print get_board_info('Baltic Avenue')
+print get_board_info('Baltic Avenues')
+
+print get_colors('brown')
+print get_colors('red')
+print get_colors('rainbow')
+'''
+
+'''
+print get_chance(2)
+print get_chance(5)
+print get_chance(7)
+print get_chance(19)
+
+print '========'
+print get_comm(0)
+print get_comm(2)
+print get_comm(5)
+print get_comm(7)
+print get_comm(19)
+'''
