@@ -3,8 +3,8 @@ from hashlib import sha1
 from random import random
 import math
 
-path = ''
-#path = 'utils/db/'
+# path = ''
+path = 'utils/db/'
 # ******************* UNCOMMENT THIS FOR LAUNCH *******************************
 # path = '/var/www/tempname7/tempname7/utils/db/'
 
@@ -76,7 +76,7 @@ def get_user(username, f=path+'data.db'):
     c.execute(comm)
     #returns a list
     fet = c.fetchall()
-    
+
     if len(fet) == 0:
         return False
     return fet[0]
@@ -157,7 +157,7 @@ def init_board(c, populate=True):
             board.append(curr)
             i+=1
 
-            
+
         for b in board:
             comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' %(b[0], b[1], b[2], b[3])
             c.execute(comm)
@@ -193,7 +193,7 @@ def get_colors(color, f=path+'data.db'):
 def init_cards(c, populate=True):
     c.execute("CREATE TABLE chance_cards(id INTEGER PRIMARY KEY, description TEXT)")
     c.execute("CREATE TABLE comm_cards(id INTEGER PRIMARY KEY, description TEXT)")
-    
+
     if populate:
         #populating chance cards
         chance = [
@@ -214,14 +214,14 @@ def init_cards(c, populate=True):
             'Your building and loan matures - Collect $150',
             'You have won a crossword competition - Collect $100'
             ]
-            
+
         i = 0
         while i < len(chance):
             comm = 'INSERT INTO chance_cards VALUES(%d, "%s")' %(i, chance[i])
             c.execute(comm)
             i+=1
 
-            
+
         #populating community cards
         commun = [
             'Advance to Go (Collect $200)',
@@ -256,7 +256,7 @@ def get_chance(f=path+'data.db'):
     c.execute("SELECT id FROM chance_cards WHERE id = (SELECT MAX(id) FROM chance_cards)")
     max_id = c.fetchall()[0][0]
     idd = math.floor(random() * (max_id+1))
-    
+
     comm = 'SELECT * FROM chance_cards WHERE id=%d;' %(idd)
     c.execute(comm)
     #returns a list
@@ -269,11 +269,11 @@ def get_chance(f=path+'data.db'):
 def get_comm(f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
-    
+
     c.execute("SELECT id FROM chance_cards WHERE id = (SELECT MAX(id) FROM chance_cards)")
     max_id = c.fetchall()[0][0]
     idd = math.floor(random() * (max_id+1))
-    
+
     comm = 'SELECT * FROM comm_cards WHERE id=%d;' %(idd)
     c.execute(comm)
     #returns a list
@@ -307,7 +307,7 @@ print auth("jenni", "123452")
 
 '''
 
-    
+
 #db = sqlite3.connect('data.db')
 #c = db.cursor()
 
