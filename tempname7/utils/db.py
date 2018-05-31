@@ -2,11 +2,11 @@ import sqlite3
 from hashlib import sha1
 from random import random
 import math
+import os
 
-# path = ''
-path = 'utils/db/'
-# ******************* UNCOMMENT THIS FOR LAUNCH *******************************
-# path = '/var/www/tempname7/tempname7/utils/db/'
+
+path = os.path.dirname(__file__)
+path += "/db/"
 
 
 def init_db(f=path+'data.db'):
@@ -25,7 +25,8 @@ def init_db(f=path+'data.db'):
     db.close()
     return True
 
-#returns true if there's a possible injection
+
+# returns true if there's a possible injection
 def checc_injecc(strr):
     bad_chars = '~`!@#$%^&*()_+-=[]{}\|:;",./<>?\\\''
     for charr in bad_chars:
@@ -33,7 +34,8 @@ def checc_injecc(strr):
             return True
     return False
 
-#==========================USERS FUNCTIONS==========================
+
+# ==========================USERS FUNCTIONS==========================
 def init_users(c, populate=True):
     c.execute("CREATE TABLE users(username TEXT PRIMARY KEY, password TEXT)")
     if populate:
@@ -43,18 +45,19 @@ def init_users(c, populate=True):
         add_user("jyu", "abcd123")
         add_user("kwang", "123abcd")
 
+
 def add_user(username, password, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
 
     if checc_injecc(username) or checc_injecc(password):
         print "Don't use special characters buddy"
-        return False #failed
+        return False  # failed
 
-    #inserts into table
+    # inserts into table
     try:
         passs = sha1(password).hexdigest()
-        comm = 'INSERT INTO users VALUES("%s", "%s")' %(username, passs)
+        comm = 'INSERT INTO users VALUES("%s", "%s")' % (username, passs)
         c.execute(comm)
     except:
         print "Username taken!"
@@ -64,45 +67,47 @@ def add_user(username, password, f=path+'data.db'):
     db.close()
     return True
 
+
 def get_user(username, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
 
     if checc_injecc(username):
         print "Don't use special characters buddy"
-        return False #failed
+        return False  # failed
 
     comm = 'SELECT * FROM users WHERE username="%s";' %(username)
     c.execute(comm)
-    #returns a list
+    # returns a list
     fet = c.fetchall()
 
     if len(fet) == 0:
         return False
     return fet[0]
 
+
 def auth(username, password, f=path+'data.db'):
     return sha1(password).hexdigest() == get_user(username)[1]
 
-#==========================BOARD FUNCTIONS==========================
-#id is the place of the space, where 0 is go
-#type is the type of place it is:
+
+# ==========================BOARD FUNCTIONS==========================
+# id is the place of the space, where 0 is go
+# type is the type of place it is:
 #  chance, community, tax, railroad, jail, go to jail, free parking, house, electric company, water works
 def init_board(c, populate=True):
     c.execute("CREATE TABLE board(id INTEGER PRIMARY KEY, name TEXT, color TEXT, price INTEGER)")
 
-
     if populate:
-        board =  []
-        names =  ['Mediterranean Avenue', 'Baltic Avenue',
-                  'Oriental Avenue', 'Vermont Avenue', 'Connecticut Avenue',
-                  'St. Charles Place', 'States Avenue', 'Virginia Avenue',
-                  'St. James Place', 'Tennessee Avenue', 'New York Avenue',
-                  'Kentucky Avenue', 'Indiana Avenue', 'Illinois Avenue',
-                  'Atlantic Avenue', 'Ventnor Avenue', 'Marvin Gardens',
-                  'Pacific Avenue', 'North Carolina Avenue', 'Pennsylvania Avenue',
-                  'Park Place', 'Boardwalk'
-                      ]
+        board = []
+        names = ['Mediterranean Avenue', 'Baltic Avenue',
+                 'Oriental Avenue', 'Vermont Avenue', 'Connecticut Avenue',
+                 'St. Charles Place', 'States Avenue', 'Virginia Avenue',
+                 'St. James Place', 'Tennessee Avenue', 'New York Avenue',
+                 'Kentucky Avenue', 'Indiana Avenue', 'Illinois Avenue',
+                 'Atlantic Avenue', 'Ventnor Avenue', 'Marvin Gardens',
+                 'Pacific Avenue', 'North Carolina Avenue', 'Pennsylvania Avenue',
+                 'Park Place', 'Boardwalk'
+                 ]
         colors = ['brown',
                   'white',
                   'pink',
@@ -111,7 +116,7 @@ def init_board(c, populate=True):
                   'yellow',
                   'green',
                   'blue'
-                      ]
+                  ]
         prices = [60, 60,
                   100, 100, 120,
                   140, 140, 160,
@@ -120,21 +125,21 @@ def init_board(c, populate=True):
                   260, 260, 280,
                   300, 300, 320,
                   350, 400
-                      ]
+                  ]
 
         i = 0
         while i < 2:
             curr = [i, names[i], colors[0], prices[i]]
             board.append(curr)
-            i+=1
+            i += 1
 
         while i < len(names):
-            #since first color only has 2
+            # since first color only has 2
             curr = [i, names[i], colors[(i+1)/3], prices[i]]
             board.append(curr)
-            i+=1
+            i += 1
 
-        miscnames  = [
+        miscnames = [
             'Reading Railroad',
             'Electric Company',
             'Pennsylvania Railroad',
@@ -155,12 +160,12 @@ def init_board(c, populate=True):
         while i < len(miscnames):
             curr = [i+len(names), miscnames[i], 'misc', miscprices[i]]
             board.append(curr)
-            i+=1
-
+            i += 1
 
         for b in board:
-            comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' %(b[0], b[1], b[2], b[3])
+            comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' % (b[0], b[1], b[2], b[3])
             c.execute(comm)
+
 
 def get_board_info(name, f=path+'data.db'):
     db = sqlite3.connect(f)
@@ -168,20 +173,21 @@ def get_board_info(name, f=path+'data.db'):
 
     comm = 'SELECT * FROM board WHERE name="%s";' %(name)
     c.execute(comm)
-    #returns a list
+    # returns a list
     fet = c.fetchall()
 
     if len(fet) == 0:
         return False
     return fet[0]
 
+
 def get_colors(color, f=path+'data.db'):
     db = sqlite3.connect(f)
     c = db.cursor()
 
-    comm = 'SELECT * FROM board WHERE color="%s";' %(color)
+    comm = 'SELECT * FROM board WHERE color="%s";' % (color)
     c.execute(comm)
-    #returns a list
+    # returns a list
     fet = c.fetchall()
 
     if len(fet) == 0:
@@ -189,13 +195,13 @@ def get_colors(color, f=path+'data.db'):
     return fet
 
 
-#==========================CARDS FUNCTIONS==========================
+# ==========================CARDS FUNCTIONS==========================
 def init_cards(c, populate=True):
     c.execute("CREATE TABLE chance_cards(id INTEGER PRIMARY KEY, description TEXT)")
     c.execute("CREATE TABLE comm_cards(id INTEGER PRIMARY KEY, description TEXT)")
 
     if populate:
-        #populating chance cards
+        # populating chance cards
         chance = [
             'Advance to Go (Collect $200)',
             'Advance to Illinois Ave. - If you pass Go, collect $200',
@@ -217,12 +223,12 @@ def init_cards(c, populate=True):
 
         i = 0
         while i < len(chance):
-            comm = 'INSERT INTO chance_cards VALUES(%d, "%s")' %(i, chance[i])
+            comm = 'INSERT INTO chance_cards VALUES(%d, "%s")' % (i, chance[i])
             c.execute(comm)
-            i+=1
+            i += 1
 
 
-        #populating community cards
+        # populating community cards
         commun = [
             'Advance to Go (Collect $200)',
             'Bank error in your favor - Collect $200',
@@ -245,9 +251,10 @@ def init_cards(c, populate=True):
 
         i = 0
         while i < len(commun):
-            comm = 'INSERT INTO comm_cards VALUES(%d, "%s")' %(i, commun[i])
+            comm = 'INSERT INTO comm_cards VALUES(%d, "%s")' % (i, commun[i])
             c.execute(comm)
-            i+=1
+            i += 1
+
 
 def get_chance(f=path+'data.db'):
     db = sqlite3.connect(f)
@@ -257,14 +264,15 @@ def get_chance(f=path+'data.db'):
     max_id = c.fetchall()[0][0]
     idd = math.floor(random() * (max_id+1))
 
-    comm = 'SELECT * FROM chance_cards WHERE id=%d;' %(idd)
+    comm = 'SELECT * FROM chance_cards WHERE id=%d;' % (idd)
     c.execute(comm)
-    #returns a list
+    # returns a list
     fet = c.fetchall()
 
     if len(fet) == 0:
         return False
     return fet[0]
+
 
 def get_comm(f=path+'data.db'):
     db = sqlite3.connect(f)
@@ -274,16 +282,17 @@ def get_comm(f=path+'data.db'):
     max_id = c.fetchall()[0][0]
     idd = math.floor(random() * (max_id+1))
 
-    comm = 'SELECT * FROM comm_cards WHERE id=%d;' %(idd)
+    comm = 'SELECT * FROM comm_cards WHERE id=%d;' % (idd)
     c.execute(comm)
-    #returns a list
+    # returns a list
     fet = c.fetchall()
 
     if len(fet) == 0:
         return False
     return fet[0]
 
-#===============================TESTS===============================
+
+# ===============================TESTS===============================
 '''
 
 init_db("data.db")
