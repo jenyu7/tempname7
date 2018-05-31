@@ -28,7 +28,7 @@ def init_db(f=path+'data.db'):
 
 # returns true if there's a possible injection
 def checc_injecc(strr):
-    bad_chars = '~`!@#$%^&*()_+-=[]{}\|:;",./<>?\\\''
+    bad_chars = ' ~`!@#$%^&*()_+-=[]{}\|:;",./<>?\\\''
     for charr in bad_chars:
         if charr in strr:
             return True
@@ -101,8 +101,8 @@ def init_board(c, populate=True):
         board = []
         names = ['Mediterranean Avenue', 'Baltic Avenue',
                  'Oriental Avenue', 'Vermont Avenue', 'Connecticut Avenue',
-                 'St. Charles Place', 'States Avenue', 'Virginia Avenue',
-                 'St. James Place', 'Tennessee Avenue', 'New York Avenue',
+                 'St.Charles Place', 'States Avenue', 'Virginia Avenue',
+                 'St.James Place', 'Tennessee Avenue', 'New York Avenue',
                  'Kentucky Avenue', 'Indiana Avenue', 'Illinois Avenue',
                  'Atlantic Avenue', 'Ventnor Avenue', 'Marvin Gardens',
                  'Pacific Avenue', 'North Carolina Avenue', 'Pennsylvania Avenue',
@@ -143,7 +143,7 @@ def init_board(c, populate=True):
             'Reading Railroad',
             'Electric Company',
             'Pennsylvania Railroad',
-            'B. & O. Railroad',
+            'B.& O. Railroad',
             'Water Works',
             'Short Line'
             ]
@@ -175,7 +175,7 @@ def get_board_info(name, f=path+'data.db'):
     c.execute(comm)
     # returns a list
     fet = c.fetchall()
-
+  
     if len(fet) == 0:
         return False
     return fet[0]
@@ -276,7 +276,7 @@ def get_chance(f=path+'data.db'):
 
 def get_comm(f=path+'data.db'):
     db = sqlite3.connect(f)
-    c = db.cursor()
+    c = db.curosor()
 
     c.execute("SELECT id FROM chance_cards WHERE id = (SELECT MAX(id) FROM chance_cards)")
     max_id = c.fetchall()[0][0]
