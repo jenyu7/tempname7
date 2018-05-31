@@ -1,8 +1,10 @@
 import sqlite3
 from hashlib import sha1
 from random import random
+import math
 
-path = 'utils/db/'
+path = ''
+#path = 'utils/db/'
 # ******************* UNCOMMENT THIS FOR LAUNCH *******************************
 # path = '/var/www/tempname7/tempname7/utils/db/'
 
@@ -74,6 +76,7 @@ def get_user(username, f=path+'data.db'):
     c.execute(comm)
     #returns a list
     fet = c.fetchall()
+    
     if len(fet) == 0:
         return False
     return fet[0]
@@ -158,21 +161,127 @@ def init_board(c, populate=True):
         for b in board:
             comm = 'INSERT INTO board VALUES(%d, "%s", "%s", %d)' %(b[0], b[1], b[2], b[3])
             c.execute(comm)
-            #print b
 
-            
+def get_board_info(name, f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    comm = 'SELECT * FROM board WHERE name="%s";' %(name)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet[0]
+
+def get_colors(color, f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    comm = 'SELECT * FROM board WHERE color="%s";' %(color)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet
+
 
 #==========================CARDS FUNCTIONS==========================
 def init_cards(c, populate=True):
     c.execute("CREATE TABLE chance_cards(id INTEGER PRIMARY KEY, description TEXT)")
     c.execute("CREATE TABLE comm_cards(id INTEGER PRIMARY KEY, description TEXT)")
-    '''
+    
     if populate:
-        comm = 'INSERT INTO chance_cards VALUES(%d, "%s")' %(id, description)
-        comm = 'INSERT INTO comm_cards VALUES(%d, "%s")' %(id, description)
-        c.execute(comm)
-    '''
+        #populating chance cards
+        chance = [
+            'Advance to Go (Collect $200)',
+            'Advance to Illinois Ave. - If you pass Go, collect $200',
+            'Advance to St. Charles Place - If you pass Go, collect $200',
+            'Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.',
+            'Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.',
+            'Bank pays you dividend of $50',
+            'Get out of Jail Free - This card may be kept until needed, or traded/sold',
+            'Go Back 3 Spaces',
+            'Go to Jail - Go directly to Jail - Do not pass Go, do not collect $200',
+            'Make general repairs on all your property - For each house pay $25 - For each hotel $100',
+            'Pay poor tax of $15 ',
+            'Take a trip to Reading Railroad - If you pass Go, collect $200',
+            'Take a walk on the Boardwalk - Advance token to Boardwalk.',
+            'You have been elected Chairman of the Board - Pay each player $50',
+            'Your building and loan matures - Collect $150',
+            'You have won a crossword competition - Collect $100'
+            ]
+            
+        i = 0
+        while i < len(chance):
+            comm = 'INSERT INTO chance_cards VALUES(%d, "%s")' %(i, chance[i])
+            c.execute(comm)
+            i+=1
 
+            
+        #populating community cards
+        commun = [
+            'Advance to Go (Collect $200)',
+            'Bank error in your favor - Collect $200',
+            "Doctor's fees - Pay $50",
+            'From sale of stock you get $50',
+            'Get Out of Jail Free - This card may be kept until needed or sold',
+            'Go to Jail - Go directly to jail - Do not pass Go - Do not collect $200',
+            'Grand Opera Night - Collect $50 from every player for opening night seats',
+            'Holiday Fund matures - Receive $100',
+            'Income tax refund - Collect $20',
+            'It is your birthday - Collect $10 from each player',
+            'Life insurance matures - Collect $100',
+            'Pay hospital fees of $100',
+            'Pay school fees of $150',
+            'Receive $25 consultancy fee',
+            'You are assessed for street repairs - $40 per house - $115 per hotel',
+            'You have won second prize in a beauty contest - Collect $10',
+            'You inherit $100'
+            ]
+
+        i = 0
+        while i < len(commun):
+            comm = 'INSERT INTO comm_cards VALUES(%d, "%s")' %(i, commun[i])
+            c.execute(comm)
+            i+=1
+
+def get_chance(f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    c.execute("SELECT id FROM chance_cards WHERE id = (SELECT MAX(id) FROM chance_cards)")
+    max_id = c.fetchall()[0][0]
+    idd = math.floor(random() * (max_id+1))
+    
+    comm = 'SELECT * FROM chance_cards WHERE id=%d;' %(idd)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet[0]
+
+def get_comm(f=path+'data.db'):
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    
+    c.execute("SELECT id FROM chance_cards WHERE id = (SELECT MAX(id) FROM chance_cards)")
+    max_id = c.fetchall()[0][0]
+    idd = math.floor(random() * (max_id+1))
+    
+    comm = 'SELECT * FROM comm_cards WHERE id=%d;' %(idd)
+    c.execute(comm)
+    #returns a list
+    fet = c.fetchall()
+
+    if len(fet) == 0:
+        return False
+    return fet[0]
 
 #===============================TESTS===============================
 '''
@@ -203,3 +312,28 @@ print auth("jenni", "123452")
 #c = db.cursor()
 
 #init_board(c)
+#init_cards(c)
+
+#init_db()
+'''
+print get_board_info('Baltic Avenue')
+print get_board_info('Baltic Avenues')
+
+print get_colors('brown')
+print get_colors('red')
+print get_colors('rainbow')
+'''
+
+'''
+print get_chance(2)
+print get_chance(5)
+print get_chance(7)
+print get_chance(19)
+
+print '========'
+print get_comm(0)
+print get_comm(2)
+print get_comm(5)
+print get_comm(7)
+print get_comm(19)
+'''
