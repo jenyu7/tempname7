@@ -56,12 +56,33 @@ board = [
     [0, 'Boardwalk']
 ]
 
-#for b in board:
-#    if b[0] == 0:
-#        print db.get_board_info(b[1])
-           
-def roll_dice():
-    return math.floor(random() * 7)
+#print len(board)
+i = 0
+for b in board:
+    if (b[1] == 'Jail'):
+        print i
+    i+=1
+'''
+def go(turn):
+    #rolls die
+    #rules:
+    #roll 2 die
+    #if you get a double, get an extra turn
+    #if you get doubles 3 times in a row, you go to jail
 
-def go():
-    pass
+    d0 = math.floor(random() * 6) + 1
+    d1 = math.floor(random() * 6) + 1
+
+
+    #do stuff
+
+
+    if d0 == d1
+        if turn < 2:
+           #give extra roll
+           go(turn+1)
+        else:
+           #go to jail
+        
+    
+''' 
