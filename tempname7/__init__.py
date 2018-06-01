@@ -13,9 +13,22 @@ def index():
         return redirect(url_for("profile"))
     return render_template("index.html", log = False)
 
-
-@app.route('/signup', methods=["GET", "POST"])
+@app.route("/signup")
 def signup():
+    if "username" in session:
+        return redirect(url_for("profile"))
+    return render_template("signup.html", log = False)
+
+@app.route("/login")
+def login():
+    if "username" in session:
+        return redirect(url_for("profile"))
+    return render_template("login.html", log = False)
+
+
+
+@app.route('/signupauth', methods=["GET", "POST"])
+def signupauth():
 
     if "username" not in session:
 
@@ -29,13 +42,13 @@ def signup():
         #passwords dont match
         if passs != passc:
             flash("Passwords don't match")
-            return render_template("index.html", log = False)
+            return render_template("signup.html", log = False)
 
         #successful signup
         else:
             if ( db.add_user(usern, passs) == False ):
                 flash("Username not good")
-                return render_template("index.html", log = False)
+                return render_template("signup.html", log = False)
 
             else:
                 session['username'] = usern
@@ -44,8 +57,8 @@ def signup():
     else:
         return redirect(url_for("profile"))
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/loginauth', methods=['GET', 'POST'])
+def loginauth():
     if 'user' in session:
         return redirect('/')
 
@@ -66,11 +79,11 @@ def login():
 
             #can not log in :(
             flash ('thats not the right password')
-            return render_template("index.html", log = False)
+            return render_template("login.html", log = False)
 
         else:
             flash ('that person doesnt exist')
-            return render_template("index.html", log = False)
+            return render_template("login.html", log = False)
 
 
 @app.route('/logout')
