@@ -220,7 +220,7 @@ def init_cards(c, populate=True):
             'Your building and loan matures - Collect $150',
             'You have won a crossword competition - Collect $100'
             ]
-
+        
         i = 0
         while i < len(chance):
             comm = 'INSERT INTO chance_cards VALUES(%d, "%s")' % (i, chance[i])

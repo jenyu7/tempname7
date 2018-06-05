@@ -50,3 +50,6 @@ finished initializing board db
 
 charlesW -- 2018-05-30 22:52:50
 presentation prep
+
+jenniferZ -- 2018-06-04 22:34:55
+worked on game design, partially implemented go (properties and getting from db havent yet)

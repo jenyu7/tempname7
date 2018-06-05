@@ -55,7 +55,7 @@ var board = [
 //players
 var init_player = function(player){
     player.location = 0;
-    player.properties = 0;
+    player.properties = [];
     player.money = 1500;
     player.in_jail = false;
     player.get_out_jail = 0;
@@ -113,7 +113,8 @@ var go = function(player, turn = 0){
 	    //see player location and link that with whatevers gonna happen
 	    loca_type = board[loca][0];
 	    loca_name = board[loca][1];
-	    
+
+	    //property should be checked last, with updated location
 	    //0: property
 	    if (loca_type == 0){
 		//if unowned
@@ -127,12 +128,125 @@ var go = function(player, turn = 0){
 		}
 	    }
 	    //1: community chest
-	    if (loca_type == 1){
-		//go to db, get id of carcd drawn
+	    if(loca_type == 1){
+		//go to db, get id of card drawn
+		var id = 0;
+
+		//advance to go
+		//collect 200
+		//pay 50
+		//get 50
+		//get out of jail free
+		//go to jail
+		//collect 50 from every player
+		//collect 100
+		//collect 20
+		//collect 10 from every player
+		//collect 100
+		//pay 100
+		//pay 150
+		//receive 50
+		//pay 40 per property
+		//collect 10
+		//collect 100
 	    }
 	    //2: chance
 	    if (loca_type == 2){
 		//go to db, get id of card drawn
+		var id = 0;
+
+
+		//advance to go
+		if(id == 0){
+		    player.location = 0;
+		    player.money += 200;
+		}
+		//advance to illinois ave
+		if(id == 1){
+		    if(player.location >= 24){
+			player.money += 200;
+		    }
+		    player.location = 24;
+		}
+		//advance to st. charles place
+		if(id == 2){
+		    if(player.location >= 11){
+			player.money += 200;
+		    }
+		    player.location = 11;
+		}
+		//=====================================================
+		//advance to nearest util
+		//if owned, throw dice and pay owner 10x amount
+		//if not, you can buy
+		if(id == 3){
+		    
+		}
+		//advance to nearest rail
+		//pay 2x amount
+		if(id == 4){
+		    
+		}
+		//=====================================================
+		//bank pays you 50
+		if(id == 5){
+		    player.money += 50;
+		}
+		//get out of jail free
+		if(id == 6){
+		    player.get_out_jail++;
+		}
+		//=====================================================
+		//need to check this space and redo the same process
+		//go back 3 spaces
+		if(id == 7){
+		    player.location -= 3;
+		    if (player.location < 0){
+			player.location += 40;
+		    }
+		}
+		//go to jail
+		if(id == 8){
+		    player.in_jail = true;
+		    //10 is where Jail is
+		    player.location = 10;
+		}
+		//each property: 25
+		if(id == 9){
+		    player.money -= 25 * player.properties.length 
+		}
+		//pay 15
+		if(id == 10){
+		    player.money -= 15;
+		}
+		//go to reading rail
+		if(id == 11){
+		    if(player.location >= 5){
+			player.money += 200;
+		    }
+		    player.location = 5;
+		}
+		//go to boardwalk
+		if(id == 12){
+		    if(player.location >= 39){
+			player.money += 200;
+		    }
+		    player.location = 39;
+		}
+		//=====================================================
+		//pay each player 50
+		if(id == 13){
+		    
+		}
+		//=====================================================
+		//collect 150
+		if(id == 14){
+		    player.money += 150;
+		}
+		//collect 100
+		if(id == 15){
+		    player.money += 100;
+		}
 	    }
 	    //3: misc
 	    if (loca_type == 3){
@@ -150,8 +264,6 @@ var go = function(player, turn = 0){
 		
 	    }
 	    
-
-
 	    //if run out of money, lose
 	    if(player.money <= 0){
 		player.alive = false;

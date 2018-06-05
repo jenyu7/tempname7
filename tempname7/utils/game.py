@@ -59,7 +59,7 @@ board = [
 #print len(board)
 i = 0
 for b in board:
-    if (b[1] == 'Jail'):
+    if (b[1] == 'Boardwalk'):
         print i
     i+=1
 '''
