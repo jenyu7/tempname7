@@ -59,8 +59,8 @@ board = [
 #print len(board)
 i = 0
 for b in board:
-    if (b[1] == 'Boardwalk'):
-        print i
+    if (b[1] == 'Water Works' or b[1] == 'Electric Company'):
+        print str(i) + " " + b[1]
     i+=1
 '''
 def go(turn):
