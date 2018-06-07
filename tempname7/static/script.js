@@ -48,7 +48,7 @@ var board = [
     [0, 'Park Place'],
     [3, 'Luxury Tax'],
     [0, 'Boardwalk']
-]
+];
 
 
 
@@ -67,7 +67,7 @@ var p1 = {name: 'jen'};
 var p2 = {name: 'kelly'};
 var p3 = {name: 'charles'};
 
-var players = [p0, p1, p2, p3]
+var players = [p0, p1, p2, p3];
 
 var i = 0;
 while (i < players.length){
@@ -81,8 +81,8 @@ var player = p0;
 //turn should be 0 when the players' turn starts -- it's only not 0 when they double roll
 var go = function(player, turn = 0){
     //rolls die
-    var d0 = Math.floor(Math.random() * 6) + 1
-    var d1 = Math.floor(Math.random() * 6) + 1
+    var d0 = Math.floor(Math.random() * 6) + 1;
+    var d1 = Math.floor(Math.random() * 6) + 1;
    
     if (player.in_jail){
 	if(d0 != d1){
@@ -98,11 +98,11 @@ var go = function(player, turn = 0){
 	if (turn >= 2 && d0 == d1){
 	    player.in_jail = true;
 	    //10 is where Jail is
-	    player.location = 10
+	    player.location = 10;
 	}
 	else{
 	    //move
-	    var loca = player.location + d0 + d1
+	    var loca = player.location + d0 + d1;
 	    //40 is number of spaces in entire board, if loca is greater than 40 then it passed go
 	    if (loca >= 40){
 		loca = loca % 40;
@@ -125,11 +125,12 @@ var go = function(player, turn = 0){
     }
 };
 
-var go_loca(player){
+var go_loca = function(player){
     
     //see player location and link that with whatevers gonna happen
-    var loca_type = board[player.location][0];
-    var loca_name = board[player.location][1];
+    var loca = player.location;
+    var loca_type = board[loca][0];
+    var loca_name = board[loca][1];
 
     //if you draw a card that makes you go back 3 spaces, you gotta check that space again
     var go_again = false;
