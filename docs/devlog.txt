@@ -53,3 +53,6 @@ presentation prep
 
 jenniferZ -- 2018-06-04 22:34:55
 worked on game design, partially implemented go (properties and getting from db havent yet)
+
+jenniferZ -- 2018-06-06 21:50:18
+finished game functions, just need the db stuff for properties now
