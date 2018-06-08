@@ -56,3 +56,6 @@ worked on game design, partially implemented go (properties and getting from db 
 
 jenniferZ -- 2018-06-06 21:50:18
 finished game functions, just need the db stuff for properties now
+
+charlesW -- 2018-06-09 22:52:50
+directions page
