@@ -3,8 +3,7 @@ import os
 from utils import db
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
-
+app.secret_key = 235jk-6fa_qwef79034jk
 db.init_db()
 
 @app.route("/")
