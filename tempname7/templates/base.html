@@ -14,15 +14,16 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/styles.css">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <!-- custom css -->
     <link rel="stylesheet" href="/tempname7/static/styles.css">
   </head>
 
-  <body class="center">
+  <body class="center" style="background-color:#BFDBAE;">
     <!-- navbar -->
-    <nav class="navbar top navbar-dark bg-dark">
+    <nav class="navbar" style="background-color:#8FBC72;">
 
       <a class="navbar-brand" href="/">
         Monopoly
@@ -43,25 +44,44 @@
           Logout
         </a>
 
-      {% endif %}
+	{% else %}
 
+	<a class="navbar-brand" href="/login">
+          Log in
+        </a>
+
+	<a class="navbar-brand" href="/signup">
+          Create an Account 
+        </a>
+	
+      {% endif %}
+	
 
     </nav>
     <br>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-          {{message}}
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-
-
+    
     <!-- body -->
-    {% block body%}
+
+    <div class="jumbotron">
+      {% block body%}
       Oops. You're not supposed to see me like this.
-    {% endblock body%}
+      {% endblock body%}
+
+      <br><br>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-danger" role="alert">{{message}}</div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      
+
+    </div>
+    
+    
 
     <!-- footer -->
     {% block footer %}

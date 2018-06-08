@@ -1,0 +1,26 @@
+
+.jumbotron
+{
+    padding-top:50px;
+    padding-left:50px;
+    background-color:#8FBC72 !important; 
+}
+
+.navbar-brand 
+{
+    color:black !important;
+}
+
+.media-body
+{
+    padding-left:70px;
+}
+
+.mt-0
+{
+    background-color:#BFDBAE;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+}
