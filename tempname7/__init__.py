@@ -24,7 +24,9 @@ def login():
         return redirect(url_for("profile"))
     return render_template("login.html", log = False)
 
-
+@app.route("/directions")
+def directions():
+    return render_template("directions.html", log = "username" in session)
 
 @app.route('/signupauth', methods=["GET", "POST"])
 def signupauth():
