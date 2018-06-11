@@ -125,13 +125,12 @@ var go = function(player, turn = 0){
     }
 };
 
-var go_loca = function(player){
-    
+var go_loca = function(player){    
     //see player location and link that with whatevers gonna happen
     var loca = player.location;
     var loca_type = board[loca][0];
     var loca_name = board[loca][1];
-
+    
     //if you draw a card that makes you go back 3 spaces, you gotta check that space again
     var go_again = false;
     
@@ -139,14 +138,16 @@ var go_loca = function(player){
     //mult_rent only changes when you draw special chance card
     var rent = -1;
     var mult_rent = 1;
+
+    var id = Math.floor(Math.random() * 17); //temp
+    //console.log(id);
+
     
     //property should be checked last, with updated location
     //1: community chest
     if(loca_type == 1){
 	//go to db, get id of card drawn
-	var id = Math.floor(Math.random() * 17); //temp
-	    
-
+	
 	//advance to go
 	if(id == 0){
 	    player.location = 0;
@@ -179,6 +180,7 @@ var go_loca = function(player){
 	    var i = 0;
 	    while (i < players.length){
 		players[i].money -= 50;
+		i++;
 	    }
 	    player.money += 50*i;
 	}
@@ -195,6 +197,7 @@ var go_loca = function(player){
 	    var i = 0;
 	    while (i < players.length){
 		players[i].money -= 50;
+		i++;
 	    }
 	    player.money += 50*i;
 	}
@@ -231,8 +234,7 @@ var go_loca = function(player){
     //2: chance
     if (loca_type == 2){
 	//go to db, get id of card drawn
-	var id = Math.floor(Math.random() * 16); //temp	    
-
+	
 	//advance to go
 	if(id == 0){
 	    player.location = 0;
@@ -290,20 +292,14 @@ var go_loca = function(player){
 	if(id == 4){
 	    //finds closest
 	    //5, 15, 25, 35
-	    var rail = 5;
-	    var closest = rail;
-	    var close_diff = rail - player.location;
-	    var i = 0;
-	    while (i < 4){
-		var curr_diff = rail - player.location;
-		if(curr > 0  && curr_diff < close_diff){
-		    closest = rail;
-		    close_diff = curr_diff;
-		}
-		rail += 10;
-		i++;
+	    var closest = (parseInt(player.location/10) * 10) + 5;
+	    if((player.location % 10) > 5){
+		closest+=10;
 	    }
-	    player.location = closest;
+	    if(player.location > closest){
+		player.money += 200;
+	    }
+	    player.location = closest % 40;
 	    
 	    mult_rent = 2;
 	}
@@ -356,6 +352,7 @@ var go_loca = function(player){
 	    var i = 0;
 	    while (i < players.length){
 		players[i].money += 50;
+		i++;
 	    }
 	    player.money -= 50*i;
 	}
@@ -370,13 +367,13 @@ var go_loca = function(player){
     }
     //3: misc
     if (loca_type == 3){
-	if(name == "Income Tax"){
+	if(loca_name == "Income Tax"){
 	    player.money -= 200;
 	}
-	if(name == "Luxury Tax"){
+	if(loca_name == "Luxury Tax"){
 	    player.money -= 100;
 	}
-	if(name == "Go to Jail"){
+	if(loca_name == "Go to Jail"){
 	    player.in_jail = true;
 	    //10 is where Jail is
 	    player.location = 10
@@ -387,15 +384,20 @@ var go_loca = function(player){
 	//if unowned
 	if(board[loca].length == 3){
 	    //give option to buy
-	    //if they buy it, then call: board[loca].append(<id>)
+	    //if they buy it, then call:
+	    //board[loca].append(<player_id>);
+	    //player.properties.append(board[loca]);
 	}
 	//if owned
 	else{
 	    //go to db to check price, and pay whoever owns it
-	    var price = 100; //temp
+	    var price = 100; //temp, should be price in db
 	    if(rent == -1){
 		rent = mult_rent * price; //price of rent
 	    }
+	    //find whoever owns that
+	    //pay_player.money+=rent;
+	    player.money-=rent;
 	}
     }
 

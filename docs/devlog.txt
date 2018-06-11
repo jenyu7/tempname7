@@ -59,3 +59,6 @@ finished game functions, just need the db stuff for properties now
 
 charlesW -- 2018-06-09 22:52:50
 directions page
+
+jenniferZ -- 2018-06-11 12:58:13
+fixed find closest railroad, still need to do properties and db stuff
